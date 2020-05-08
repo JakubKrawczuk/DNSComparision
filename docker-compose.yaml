@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  dns:
+    build:
+      context: .
+      dockerfile: dns.Dockerfile
+    networks:
+      - dnsnet
+    tty: true
+    stdin_open: true
+
+networks:
+  dnsnet:
