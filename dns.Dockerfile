@@ -8,5 +8,8 @@ RUN pip install dnspython
 
 # Comparator app
 COPY comp.py /home
+COPY dns_cfg/*db.dsk /etc/bind/
+COPY dns_cfg/named.conf.local /etc/bind
 
-CMD service bind9 restart && python /home/comp.py && /bin/bash
+#service bind9 restart && 
+CMD python /home/comp.py && /bin/bash

@@ -24,5 +24,6 @@ def get_Host_name_IP():
 get_Host_name_IP()
 
 #Get DNS config (cfg files in same dir (prefix node_id))
+os.rename(r'/etc/bind/'+node_id+'db.dsk',r'/etc/bind/db.dsk')
 
-os.system("service bind9 reload")
+os.system("service bind9 restart")
