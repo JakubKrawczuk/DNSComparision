@@ -1,6 +1,7 @@
 FROM python:3
 RUN apt-get update
 
-COPY manager.py /home
+COPY manager_app/* /home/
 
-CMD python /home/manager.py && /bin/bash
+WORKDIR /home
+CMD python manager.py && /bin/bash
