@@ -2,6 +2,7 @@ import wzorzec as wzor
 import importStruct
 import threading
 import socket
+import os.path
 
 
 class SendThread(threading.Thread):
@@ -32,20 +33,34 @@ class ReceiveThread(threading.Thread):
             self.q.append(data)
         self.sock.close()
 
-
-# lista prób porównawczych
-[psi, wzorce] = importStruct.run()
+def patternChange():
+    global psi, wzorce
+    plik_wzorcowy = "0"
+    while len(plik_wzorcowy) > 0 and not os.path.isfile(plik_wzorcowy):
+        print("Plik wzorca [struct.cfg]:")
+        plik_wzorcowy = input()
+    if len(plik_wzorcowy) > 0:
+        [psi, wzorce] = importStruct.run(plik_wzorcowy)
+    else:
+        [psi, wzorce] = importStruct.run()
 
 print("Nacisnij enter, aby rozpoczac")
 input()
+
+# lista prób porównawczych
+patternChange()
+
 zapytanie = ""
 while zapytanie != "q":
     wynik = []
 
-    print("Podaj zapytanie (q-quit)")
+    print("Podaj zapytanie (q-quit, w-wzorzec)")
     zapytanie = input()
     if zapytanie == 'q':
         break
+    elif zapytanie == 'w':
+        patternChange()
+        continue
     # zapytanie = "e3.dsk"
 
     receiveThread = ReceiveThread(len(psi), wynik)
